@@ -2,18 +2,18 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
-
+require('dotenv').config();
 const port = 4000;
-const apiKey = 'bafd029653218f7f7c6668443dc86d87'; // Replace with your API key
 
-// Create an HTTP server
+
+
 const server = http.createServer(async (req, res) => {
     const url = req.url;
-
+    const api_key= process.env.WEATHER_APP_API_KEY;
     if (url.startsWith('/weather')) {
         const query = new URLSearchParams(url.split('?')[1]);
-        const city = query.get('city') || 'London'; // Default city if none is provided
-        const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=bafd029653218f7f7c6668443dc86d87`;
+        const city = query.get('city') || 'London'; 
+        const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${api_key}`;
 
         try {
             const response = await axios.get(weatherUrl);
